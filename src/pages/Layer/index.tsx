@@ -1,25 +1,90 @@
-import React from "react";
+import React, { useState } from "react";
 import "animate.css";
 import Navbar from "./components/Navbar";
-import LayerOne from "./components/LayerOne";
+import { Floor } from "../../assets";
+import { IoIosPin } from "react-icons/io";
+import { layerOneInfo } from "./data";
 
 const Layer = () => {
+  const [pinMark, setPinMark] = useState<number>(0);
+  //To get exact position for Pin mark
+  const PinMarkSize = {
+    width: 16,
+    height: 30,
+  };
+  const [moreDetails, setMoreDetails] = useState<boolean>(false);
+  const [localMousePos, setLocalMousePos] = useState<Coordinates | null>(null);
+  const handleMouseMove = (event: React.MouseEvent<HTMLImageElement>) => {
+    // Get mouse position relative to element
+    const x = event.nativeEvent.offsetX;
+    const y = event.nativeEvent.offsetY;
+    setLocalMousePos({ x, y });
+    console.log(`X: ${localMousePos?.x}  /  Y:${localMousePos?.y}`);
+  };
   return (
     <div className="h-screen">
       <Navbar />
 
       {/* layout */}
-      <div className="grid grid-cols-5 gap-4 pt-10 px-20">
-        {/* content */}
-        <div className="col-span-4">
-          <LayerOne />
+      <div className="md:grid md:grid-cols-5 gap-4 pt-10 md:px-10">
+        {/* Layer with the Pin Marks */}
+        <div className="md:col-span-4">
+          <div className="flex flex-col justify-center items-center gap-10">
+            <div className="relative">
+              <img
+                src={Floor}
+                alt="Layer"
+                width={350}
+                className="animate__animated animate__fadeInUp"
+                onClick={handleMouseMove}
+              />
+              <div>
+                {layerOneInfo.map((item) => (
+                  <IoIosPin
+                    key={item.id}
+                    size={32}
+                    style={{
+                      top: `${item.y - PinMarkSize.height}px`,
+                      left: `${item.x - PinMarkSize.width}px`,
+                    }}
+                    className={`text-${item.color} absolute cursor-pointer hover:scale-125 transition-all`}
+                    onClick={() => {
+                      setPinMark(item.id);
+                      setMoreDetails(true);
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+            {moreDetails && (
+              <div className="p-5 bg-white shadow-lg">
+                <div className="flex flex-col items-center justify-center mb-5">
+                  <img
+                    src={layerOneInfo[pinMark].image}
+                    alt={layerOneInfo[pinMark].title}
+                    width={300}
+                    height={250}
+                    className="rounded-t-md shadow-2xl"
+                  />
+                  <h1 className="bg-[#6c757c w-[300px] py-1 font-semibold text-center text-xl text-white rounded-b-md bg-primary-3 shadow-lg">
+                    {layerOneInfo[pinMark].title}
+                  </h1>
+                </div>
+                <p className="leading-8">{layerOneInfo[pinMark].description}</p>
+              </div>
+            )}
+          </div>
         </div>
-        {/* side info */}
-        <div className=" border-l-4 border-[#212529] h-full">
-          <p>PIN [1]</p>
-          <p>PIN [2]</p>
-          <p>PIN [3]</p>
-          <p>PIN [4]</p>
+        {/* side pin information */}
+        <div className="flex gap-2 flex-wrap mt-5 px-5 md:px-0 md:mt-0 md:block md:space-y-5">
+          {layerOneInfo.map((item) => (
+            <div key={item.id}>
+              <div className=" flex items-center gap-2 bg-primary-3 text-white font-semibold w-fit py-1 pl-1 pr-3 rounded">
+                <IoIosPin size={32} className={`text-${item.color}`} />
+                <p>{item.title}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
