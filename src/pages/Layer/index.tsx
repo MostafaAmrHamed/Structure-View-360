@@ -47,7 +47,7 @@ const Layer = () => {
                       top: `${item.y - PinMarkSize.height}px`,
                       left: `${item.x - PinMarkSize.width}px`,
                     }}
-                    className={`text-${item.color} absolute cursor-pointer hover:scale-125 transition-all`}
+                    className={`${item.color} absolute cursor-pointer hover:scale-125 transition-all`}
                     onClick={() => {
                       setPinMark(item.id);
                       setMoreDetails(true);
@@ -57,7 +57,7 @@ const Layer = () => {
               </div>
             </div>
             {moreDetails && (
-              <div className="p-5 bg-white shadow-lg">
+              <div className="p-5 bg-white shadow-lg animate__animated animate__fadeInUp">
                 <div className="flex flex-col items-center justify-center mb-5">
                   <img
                     src={layerOneInfo[pinMark].image}
@@ -78,11 +78,16 @@ const Layer = () => {
         {/* side pin information */}
         <div className="flex gap-2 flex-wrap mt-5 px-5 md:px-0 md:mt-0 md:block md:space-y-5">
           {layerOneInfo.map((item) => (
-            <div key={item.id}>
-              <div className=" flex items-center gap-2 bg-primary-3 text-white font-semibold w-fit py-1 pl-1 pr-3 rounded">
-                <IoIosPin size={32} className={`text-${item.color}`} />
-                <p>{item.title}</p>
-              </div>
+            <div
+              key={item.id}
+              className=" flex items-center gap-2 bg-primary-3 text-white font-semibold w-fit py-1 pl-1 pr-3 rounded animate__animated animate__fadeInRight cursor-pointer"
+              onClick={() => {
+                setPinMark(item.id);
+                setMoreDetails(true);
+              }}
+            >
+              <IoIosPin size={32} className={`${item.color}`} />
+              <p>{item.title}</p>
             </div>
           ))}
         </div>

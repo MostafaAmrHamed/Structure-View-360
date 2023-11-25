@@ -9,7 +9,7 @@ export const layerOneInfo: pinInfo[] = [
     image: "https://i.imgur.com/vZbeEIU.jpeg",
     x: 55,
     y: 50,
-    color: "blue-600",
+    color: "text-blue-600",
   },
   {
     id: 1,
@@ -25,7 +25,7 @@ export const layerOneInfo: pinInfo[] = [
     image: "https://i.imgur.com/Bn4z7uP.png",
     x: 88,
     y: 90,
-    color: "green-500",
+    color: "text-green-500",
   },
   {
     id: 2,
@@ -41,6 +41,6 @@ export const layerOneInfo: pinInfo[] = [
     image: "https://i.imgur.com/sfTngqR_d.webp?maxwidth=760&fidelity=grand",
     x: 195,
     y: 50,
-    color: "red-500",
+    color: "text-red-500",
   },
 ];
