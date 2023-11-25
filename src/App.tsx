@@ -1,9 +1,10 @@
-import React from "react";
+import Home from "./pages/Home";
+import Layer from "./pages/Layer";
 
 function App() {
   return (
-    <div className="h-screen">
-      <h1 className="text-center">Porject: Structure View 360</h1>
+    <div>
+      <Layer />
     </div>
   );
 }
